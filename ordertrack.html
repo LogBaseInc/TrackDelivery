@@ -1,0 +1,107 @@
+<nav class="navbar navbar-default marginbottom0 navfixed">
+    <div class="container-fluid" style="padding-right: 10px;">
+        <div class="navbar-header" style="width:100%; margin-top:29px;">
+            <div data-ng-show="vm.haserror==false">
+                <h4 style="display:inline; color:white; margin-left: 1%">{{vm.createddate}}</h4>
+                <h4 style="display:inline;margin-left: 76%; color:white">{{vm.orderdetails.deliverydate}}</h4>
+                <div>
+                    <h5 style="display:inline; margin-left: 3%; color:white">{{vm.createdtime}}</h5>
+                    <h5 style="display:inline; margin-left: 77%; color:white">{{vm.orderdetails.time}}</h5>
+                </div>
+            </div>
+            <br/>
+            <div style="display:inline-flex; margin-left:29px; margin-top: -10px;">
+                <i class="fa fa-check statusicon"  style ="margin-left:5px;margin-top:2px;" ng-class="{statusiconselected: vm.status >= 1}"></i>
+
+                <div class="statusline-horiz" ng-class="{greenbgcolor: vm.status >= 2}"></div>
+                <i class="fa fa-eye statusicon" style ="margin-left:5px;margin-top:2px;" ng-class="{statusiconselected: vm.status >= 2}"></i>
+
+                <div class="statusline-horiz" ng-class="{greenbgcolor: vm.status >= 3}"></div>
+                <i class="fa fa-star statusicon" style ="margin-left:5px;margin-top:2px;" ng-class="{statusiconselected: vm.status >= 3}"></i>
+
+                <div class="statusline-horiz" ng-class="{greenbgcolor: vm.status >= 4}"></div>
+                <i class="fa fa-ship statusicon" style ="margin-left:5px;margin-top:2px;" ng-class="{statusiconselected: vm.status >= 4}"></i>
+
+                <div class="statusline-horiz" ng-class="{greenbgcolor: vm.status >= 5}"></div>
+                <i class="fa fa-thumbs-up statusicon" style ="margin-left:5px;margin-top:2px;" ng-class="{statusiconselected: vm.status >= 5}"></i>
+            </div>
+            <div style="margin-left:-6px; margin-top:5px;">
+                <span class="statustext" ng-class="{greencolor: vm.status >= 1}" style ="margin-left:40px;">Placed</span>
+                <span class="statustext" ng-class="{greencolor: vm.status >= 2}" style="margin-left:150px;">Reviewed</span>
+                <span class="statustext" ng-class="{greencolor: vm.status >= 3}" style ="margin-left:140px;">Prepared</span>
+                <span class="statustext" ng-class="{greencolor: vm.status >= 4}" style ="margin-left:130px;">Dispatched</span>
+                <span class="statustext" ng-class="{greencolor: vm.status >= 5}" style ="margin-left:132px;">Delivered</span>
+            </div>
+        </div>
+    </div>
+</nav>
+<div data-ng-show="vm.status == null" style="z-index:1000">
+    <img src="img/loader.gif" class="ajax-loader"></img>
+</div>
+<div data-ng-show="vm.haserror==false" class="whitebg" ng-style="{'height':(vm.status == 4? '600px':'100%')}">
+    <div>
+        <div class="orderdivimg" data-ng-if="vm.status != 4">
+            <center>
+                <i data-ng-if="vm.status == 1" class="fa fa-shopping-bag orderstatusicon"></i>
+                <i data-ng-if="vm.status == 2" class="fa fa-hand-peace-o orderstatusicon"></i>
+                <i data-ng-if="vm.status == 3" class="fa fa-gift orderstatusicon" style="font-size:250px; margin-top:11%"></i>
+                <i data-ng-if="vm.status == 5" class="fa fa-thumbs-o-up orderstatusicon" style="margin-top:23%"></i>
+            </center>
+        </div>
+
+        <div data-ng-if="vm.showmaps && vm.status == 4" class="container-fluid">
+            <div class="row">
+                <div class="etdiv" data-ng-show="vm.duration != null"> 
+                    <center style="margin-top:19px;">
+                        <small style="margin-left:6px;">ETA</small></br>
+                        <span style="font-size:13px;">~ {{vm.duration}}</span>
+                    </center>
+                </div>
+                <div class="tm-live-map" style="width:550px; height:600px;">
+                    <ui-gmap-google-map center='vm.map.center' zoom='vm.map.zoom' options="vm.mapOptions">
+                    <ui-gmap-marker coords="vm.startmarker.coords" options="vm.startmarker.options" idkey="vm.startmarker.id"></ui-gmap-marker>
+                    <ui-gmap-marker coords="vm.endmarker.coords" options="vm.endmarker.options" idkey="vm.endmarker.id"></ui-gmap-marker>
+                    <ui-gmap-marker coords="vm.marker.coords" options="vm.marker.options" idkey="vm.marker.id"></ui-gmap-marker>
+                    </ui-gmap-google-map>
+                </div>
+            </div>
+        </div>
+
+        <div class="orderdivdetail" data-ng-if="vm.orderdetails">
+            <h4 class="orderheader">Order #{{vm.orderId}}</h4>
+            <br/>
+            <h4><i class="fa fa-dashboard"></i> <span> Status</span></h4>
+            <div style="margin-top:10px; margin-left:30px;" class="text-muted">
+                <span data-ng-if="vm.statushistory.delivered"><span ng-class="{statuscolor: vm.status == 5}">Delivered</span> on {{vm.statushistory.delivered}}<br/></span>
+                <span data-ng-if="vm.statushistory.dispatched"><span ng-class="{statuscolor: vm.status == 4}">Dispatched</span> on {{vm.statushistory.dispatched}}<br/></span>
+                <span data-ng-if="vm.statushistory.prepared"><span ng-class="{statuscolor: vm.status == 3}">Prepared</span> on {{vm.statushistory.prepared}}<br/></span>
+                <span data-ng-if="vm.statushistory.reviewed"><span ng-class="{statuscolor: vm.status == 2}">Reviewed</span> on {{vm.statushistory.reviewed}}<br/></span>
+                <span data-ng-if="vm.statushistory.placed"><span ng-class="{statuscolor: vm.status == 1}">Order Placed on</span> {{vm.statushistory.placed}}<br/></span>
+            </div>
+            <br/>
+            <h4><i class="fa fa-map-marker"></i> <span> Shipping Address</span></h4>
+            <div style="margin-top:10px; margin-left:30px;" class="text-muted">
+                <span>{{vm.orderdetails.name}},</span></br>
+                <div data-ng-repeat="address in vm.orderdetails.address">
+                    <span>{{address}},</span><br/>
+                </div>
+                <span>{{vm.orderdetails.zip}}.</span><br/>
+            </div>
+            <br/>
+            <div data-ng-if="vm.orderdetails.items.length > 0">
+                <h4><i class="fa fa-gift"></i> <span> Items</span></h4>
+                <div style="margin-top:10px; margin-left:30px;" class="text-muted">
+                    <span data-ng-repeat="item in vm.orderdetails.items">{{item}}</br></span>
+                </div>
+            </div>
+            <br/>
+            <div data-ng-if="vm.status >= 4">
+                <h4><i class="fa fa-car"></i> <span> Delivery Person</span></h4>
+                <div style="margin-top:10px; margin-left:30px;" class="text-muted">
+                    <span>{{vm.drivername}}</span></br>
+                </div>
+            </div>
+            <br/>
+        </div>
+    </div>
+</div>

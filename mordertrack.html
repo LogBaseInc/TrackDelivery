@@ -1,0 +1,123 @@
+<div data-ng-controller="mordertrack as mobilevm">
+	<div data-ng-if="vm.haserror == true" style="background-color:black">
+        <center>
+        	<div style="width:330px;height:250px;" class="errordiv-center">
+	            <i class="fa fa-thumbs-o-down" style="font-size:200px; color:gray"></i>
+	            <h3 style="color:grey">{{vm.errortext}}</h3>
+	        </div>
+        </center>
+    </div>
+    <div  data-ng-if="vm.haserror == false">
+		<nav class="navbar navbar-default marginbottom0 navfixed m-nav" data-ng-click="mobilevm.ordernavclicked()">
+		    <div class="container-fluid" style="padding-right: 10px;">
+		        <div class="navbar-header" style="width:100%;">
+		        	<center style="padding-top: 5px;">
+		        		<i data-ng-if="mobilevm.showorddetails || mobilevm.showordertrack" class="fa fa-angle-left" style="display:inline; color:white; float:left; font-size: 30px; margin-top:2px;"></i></h4>
+		            	<h4 style="color:white; display:inline;">Order #{{vm.orderId}}
+		                <i data-ng-if="mobilevm.showstatus" class="fa fa-angle-right" style="display:inline; color:white; float:right; font-size: 30px; margin-top:2px;"></i></h4>
+		            	<br/>
+		            	<small data-ng-if="mobilevm.showorddetails == false">Click here for order details</small>
+		            	<small data-ng-if="mobilevm.showorddetails == true">Click here for status</small>
+		            </center>
+		        </div>
+		    </div>
+		</nav>
+		<div data-ng-if="mobilevm.showstatus">
+			<center>
+				<h4 style="color:white; margin-bottom:0px;">{{vm.createddate}}</h4>
+				<h5 style="color:gray; margin-top:2px;">{{vm.createdtime}}</h5>
+			</center>
+			<div class="statuscenter" data-ng-click="mobilevm.trackorder()">
+			    <i class="fa fa-check statusicon" style="margin-top:2px;" ng-class="{statusiconselected: vm.status >= 1}"></i>
+			   	<span class="statustext" ng-class="{greencolor: vm.status >= 1}" style="margin-top:20px; margin-left:10px;">Placed</span>
+			</div>
+
+			<div class="statuscenter" data-ng-click="mobilevm.trackorder()">
+			    <div class="statusline" ng-class="{greenbgcolor: vm.status >= 2}"></div>
+			    <i class="fa fa-eye statusicon" style ="margin-top:2px;" ng-class="{statusiconselected: vm.status >= 2}"></i>
+			    <span class="statustext" ng-class="{greencolor: vm.status >= 2}" style="margin-left:10px;">Reviewed</span>
+			</div>
+
+			<div class="statuscenter" data-ng-click="mobilevm.trackorder()">
+			    <div class="statusline" ng-class="{greenbgcolor: vm.status >= 3}"></div>
+			    <i class="fa fa-star statusicon" style ="margin-top:2px;" ng-class="{statusiconselected: vm.status >= 3}"></i>
+			    <span class="statustext" ng-class="{greencolor: vm.status >= 3}" style ="margin-left:10px;" >Prepared</span>
+		    </div>
+
+			<div class="statuscenter" data-ng-click="mobilevm.trackorder()">
+			    <div class="statusline" ng-class="{greenbgcolor: vm.status >= 4}"></div>
+			    <i class="fa fa-ship statusicon" style ="margin-top:2px;" ng-class="{statusiconselected: vm.status >= 4}"></i>
+			    <span class="statustext" ng-class="{greencolor: vm.status >= 4}" style ="margin-left:10px;" >Dispatched</span>
+			</div>
+
+			<div class="statuscenter" data-ng-click="mobilevm.trackorder()">
+			    <div class="statusline" ng-class="{greenbgcolor: vm.status >= 5}"></div>
+			    <i class="fa fa-thumbs-up statusicon" style ="margin-top:2px;" ng-class="{statusiconselected: vm.status >= 5}"></i>
+			    <span class="statustext" ng-class="{greencolor: vm.status >= 5}" style ="margin-left:10px;" >Delivered</span>
+			</div>
+			<center>
+				<h4 style="color:white; margin-bottom:0px;">{{vm.orderdetails.deliverydate}}</h4>
+				<h5 style="color:gray; margin-top:2px;">{{vm.orderdetails.time}}</h5>
+			</center>
+			<br/>
+		</div>
+
+		<div data-ng-if="mobilevm.showorddetails" style="margin-left:20px;">
+	        <h4 style="color:white"><i class="fa fa-dashboard"></i> <span> Status</span></h4>
+	        <a href="#" data-ng-if="vm.status==4" data-ng-click="mobilevm.trackorder()">Track you order here</a>
+	        <div style="margin-top:10px; margin-left:30px;" class="text-muted">
+	            <span data-ng-if="vm.statushistory.delivered"><span ng-class="{statuscolor: vm.status == 5}">Delivered</span> on {{vm.statushistory.delivered}}<br/></span>
+	            <span data-ng-if="vm.statushistory.dispatched"><span ng-class="{statuscolor: vm.status == 4}">Dispatched</span> on {{vm.statushistory.dispatched}}<br/></span>
+	            <span data-ng-if="vm.statushistory.prepared"><span ng-class="{statuscolor: vm.status == 3}">Prepared</span> on {{vm.statushistory.prepared}}<br/></span>
+	            <span data-ng-if="vm.statushistory.reviewed"><span ng-class="{statuscolor: vm.status == 2}">Reviewed</span> on {{vm.statushistory.reviewed}}<br/></span>
+	            <span data-ng-if="vm.statushistory.placed"><span ng-class="{statuscolor: vm.status == 1}">Order Placed on</span> {{vm.statushistory.placed}}<br/></span>
+	        </div>
+	        <br/>
+	        <h4 style="color:white"><i class="fa fa-map-marker"></i> <span> Shipping Address</span></h4>
+	        <div style="margin-top:10px; margin-left:30px;" class="text-muted">
+	            <span>{{vm.orderdetails.name}},</span></br>
+	            <div data-ng-repeat="address in vm.orderdetails.address">
+	                <span>{{address}},</span><br/>
+	            </div>
+	            <span>{{vm.orderdetails.zip}}.</span><br/>
+	        </div>
+	         <br/>
+	        <h4 style="color:white"><i class="fa fa-gift"></i> <span> Items</span></h4>
+	        <div style="margin-top:10px; margin-left:30px;" class="text-muted">
+	            <span data-ng-repeat="item in vm.orderdetails.items">{{item}}</br></span>
+	        </div>
+	        <br/>
+	        <div data-ng-if="vm.status >= 4">
+	            <h4 style="color:white"><i class="fa fa-car"></i> <span> Delivery Person</span></h4>
+	            <div style="margin-top:10px; margin-left:30px;" class="text-muted">
+	                <span>{{vm.drivername}}</span></br>
+		        </div>
+	        </div>
+	        <br/>
+	        <center>
+	        	<button type="button" class="btn btn-default" data-ng-click="mobilevm.showorddetails = false; mobilevm.showstatus = true; mobilevm.showordertrack = false">Go Back</button>
+	        </center>
+	        <br/>
+		</div>
+
+		<div data-ng-if="vm.showmaps && vm.status == 4 && mobilevm.showordertrack == true" class="container-fluid">
+		    <div class="row">
+		    	<div class="etdiv" data-ng-show="vm.duration != null"> 
+	                <center style="margin-top:19px;">
+	                    <small style="margin-left:6px;">ETA</small></br>
+	                    <span style="font-size:13px;">~ {{vm.duration}}</span>
+	                </center>
+	            </div>
+
+		        <div class="tm-live-map" style="width:100%">
+		            <ui-gmap-google-map center='vm.map.center' zoom='vm.map.zoom' options="vm.mapOptions">
+		            <ui-gmap-marker coords="vm.startmarker.coords" options="vm.startmarker.options" idkey="vm.startmarker.id"></ui-gmap-marker>
+		            <ui-gmap-marker coords="vm.endmarker.coords" options="vm.endmarker.options" idkey="vm.endmarker.id"></ui-gmap-marker>
+		            <ui-gmap-marker coords="vm.marker.coords" options="vm.marker.options" idkey="vm.marker.id"></ui-gmap-marker>
+		            </ui-gmap-google-map>
+		        </div>
+		    </div>
+		</div>
+	</div>
+</div>
+

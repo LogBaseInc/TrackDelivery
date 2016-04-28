@@ -1,0 +1,268 @@
+html, body { height: 100%; }
+
+body, .tm-partials, .tm-live-map {
+    height: 100%; 
+    width: 100%;
+    font-family: 'Roboto Slab' !important;
+    background-color: black;
+}
+
+.tm-live-map {
+    z-index: 1;
+    position: absolute;
+}
+
+.tm-marker-label {
+    font-style: italic;
+    margin-top: 5px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.angular-google-map-container { 
+   height:100%; 
+   width:100%; 
+   position:absolute; 
+   top:0; 
+   left:0;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
+.error_page {
+    padding: 50px;
+    margin: auto;
+    text-align: center
+}
+
+.navbar-default {
+    background-color: rgba(51, 51, 51, 0.71);
+    border-color: rgba(51, 51, 51, 0.71);
+}
+
+.navbar {
+    position: relative;
+    height:200px;
+    margin-bottom: 20px;
+    border-radius: 0px;
+    border: 1px solid transparent;
+}
+
+.marginbottom0 {
+    margin-bottom: 0!important;
+}
+
+.logoimage {
+    margin-right: 0!important;
+    margin-bottom: 2px!important;
+    height: 20px;
+}
+
+.logoimage, .logoimage-home, .tripsheading {
+    display: inline!important;
+}
+
+img {
+    border: 0;
+}
+
+.btn, .btn-group, .btn-group-vertical, .caret, .checkbox-inline, .radio-inline, img {
+    vertical-align: middle;
+}
+
+.tm-live-summary {
+    background-color: White;
+    opacity: .9;
+    padding-top:10px;
+    padding-left:10px;
+    padding-right:10px;
+    padding-bottom:20px;
+    text-decoration: none; 
+    position: fixed; 
+    bottom: 5px; 
+    right: 5px; 
+    border-radius: 5px; 
+    z-index: 1;
+    font-weight:bold;
+}
+
+.tm-live-today {
+    margin-bottom: 0px;
+}
+
+.tm-live-distance {
+    margin-top: 5px;
+}
+
+.tm-overlay-unit {
+    color: #424242;
+}
+
+#driverdiv img {
+    position: absolute;
+    top: 50%;
+    margin-top: -10px;  
+}
+
+#driverdiv span {
+    margin-left: 60px; 
+    display: block;    
+}
+
+.statusline {
+    width:2px; 
+    height:40px; 
+    background-color: rgba(128, 128, 128, 0.31); 
+    border-radius:4px;
+    margin-top: 4px;
+    margin-left: 75px;
+}
+
+.statusline-horiz {
+    width: 155px;
+    height: 2px;
+    background-color: rgba(128, 128, 128, 0.31);
+    border-radius: 4px;
+    margin-top: 24px;
+    margin-left: 5px;
+}
+
+.statusicon {
+    color: rgba(128, 128, 128, 0.69);
+    font-size: 15px;
+    margin-left: 5px;
+    margin-top: 2px;
+    padding: 15px;
+    background-color: rgba(157, 157, 157, 0.18);
+    border-radius: 24px
+}
+
+.statustext {
+    color: rgba(128, 128, 128, 0.69);
+    font-size: 15px;
+}
+
+.statusiconselected {
+    color: #28A728 !important;
+    background-color: rgb(223, 240, 216);
+}
+
+.greencolor {
+    color: #28A728 !important;
+}
+
+.greenbgcolor {
+    background-color: #28A728 !important;
+}
+
+.statusoption {
+  width:200px;
+  position:fixed;
+  left: -200px;
+  display:block;
+  color:#FFF;
+  z-index:20;
+  opacity: 0.95;
+}
+
+.ajax-loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -32px; /* -1 * image width / 2 */
+  margin-top: -32px; /* -1 * image height / 2 */
+}
+
+.desktopbody {
+   width: 1000px;
+   font-family: 'Roboto Slab' !important;
+   background: #dfe0e2 url('../img/banner.jpg') no-repeat center center fixed; 
+    overflow: hidden;
+   margin: 0 auto
+}
+
+.whitebg {
+  background-color: white;
+  height: 100%;
+}
+
+.orderheader{
+    margin: 0px;
+    padding-top: 20px;
+    color: #28A728;
+}
+
+.text-muted{
+  color: gray;
+}
+
+.orderdivimg {
+  position: absolute;
+  color:rgba(1, 97, 1, 0.64);
+  width: 570px;
+}
+
+.orderstatusicon {
+  font-size: 200px;
+  margin-top:15%
+}
+
+.orderdivdetail{
+    margin-left: 570px;
+    display: block;
+    min-height: 385px;
+}
+
+.statuscolor {
+   color: #28A728;
+}
+
+.m-nav {
+  background-color: rgb(119, 119, 119);
+  height: 25px;
+}
+
+.statuscenter{
+    width: 150px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-default {
+  background-color: #ccc;
+}
+
+.container-fluid>.navbar-header {
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
+.etdiv {
+    background-color: rgba(71, 162, 40, 0.74);
+    height: 95px;
+    width: 95px;
+    color: white;
+    z-index: 5;
+    position: absolute;
+    margin-top: 10px;
+    border-radius: 50%;
+    border: 5px solid white;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.errordiv-center{
+  position:absolute;
+  color:#fff;
+  top:50%;
+  left:50%;
+  padding:15px;
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+
+
+
