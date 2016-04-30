@@ -33,7 +33,7 @@ function($http, $q, $window, $rootScope, $scope, $compile, uiGmapGoogleMapApi, u
 	activate();
 
 	function activate() {
-		vm.isdesktop = false;//IsDesktop();
+		vm.isdesktop = IsDesktop();
 		vm.durarion = null;
 
 		token = getParameterByName('token');
@@ -112,7 +112,8 @@ function($http, $q, $window, $rootScope, $scope, $compile, uiGmapGoogleMapApi, u
 					getOrderDetails(tokensplit[0], date, tokensplit[2]);
 
 				vm.orderId = token.split('_')[2];
-				if(vm.status == 4 && snapshot.val().status != "Dispatched") {
+				if((vm.status == 4 && snapshot.val().status != "Dispatched") || 
+				   (vm.status != null && vm.status != 0 && vm.status != 4 && snapshot.val().status == "Dispatched")) {
 					$window.location.reload();
 				}
 				else if(snapshot.val().status == "Cancelled") {
@@ -167,6 +168,7 @@ function($http, $q, $window, $rootScope, $scope, $compile, uiGmapGoogleMapApi, u
 		orderref.on("value", function(snapshot) {
 			var data = snapshot.val();
 			vm.orderdetails = {};
+			vm.orderdetails.rawaddress = data.address + " "+ data.zip;
 			vm.orderdetails.address = data.address.split(",");
 			vm.orderdetails.zip = data.zip;
 
@@ -345,7 +347,7 @@ function($http, $q, $window, $rootScope, $scope, $compile, uiGmapGoogleMapApi, u
 					vm.marker.coords.latitude = livedata.latitude;
 					vm.marker.coords.longitude = livedata.longitude;
 					vm.marker.time = getTimeStamp(livedata.locationtime);
-					vm.marker.options.labelContent ='<span style="font-weight:bold; font-size:15px;; color:black"> @ ' + location + '</span><br/>' + '<span style="font-weight:bold; font-size:15px;color:black">On the way</span>'
+					vm.marker.options.labelContent ='<div style="min-width:120px;"><span style="font-weight:bold; font-size:15px;; color:black"> @ ' + location + '</span><br/>' + '<span style="font-weight:bold; font-size:15px;color:black">On the way</span></div>'
 		  			
 		  			getEstimatedTime(livedata.latitude, livedata.longitude);
 
@@ -376,26 +378,33 @@ function($http, $q, $window, $rootScope, $scope, $compile, uiGmapGoogleMapApi, u
    	function getEstimatedTime(sourcelat, sourcelng) {
    		if(dest != null) {
 	   		var service = new google.maps.DistanceMatrixService();
-	   		var origins = [];
-	   		origins.push(new google.maps.LatLng(sourcelat, sourcelng));
 			service.getDistanceMatrix(
 		    {
-			    origins: origins,
-			    destinations: [dest],
+			    origins: [new google.maps.LatLng(sourcelat, sourcelng)],
+			    destinations: [dest, vm.orderdetails.rawaddress],
 			    travelMode: google.maps.TravelMode.DRIVING,
 			    unitSystem: google.maps.UnitSystem.METRIC,
 			    avoidHighways: false,
 			    avoidTolls: false
 		    }, 
 		    function(response, status) {
+		    	console.log(response);
 		    	if(status == 'OK') {
-					for(var i=0; i<response.rows.length; i++){
-						var element = response.rows[i].elements[0];
-						if(element.status == 'OK') {
-							vm.duration = element.duration.text.replace("hour", "hr");
-							applyscope();
+		    		var durationvalue = 0;
+		    		var durationtext = "";
+					for(var i=0; i<response.rows.length; i++) {
+						for(var j=0; j< response.rows[i].elements.length; j++) {
+							var element = response.rows[i].elements[j];
+							if(element.status == 'OK') {
+								if(durationvalue == 0 || element.duration.value <= durationvalue) {
+									durationvalue = element.duration.value;
+									durationtext = element.duration.text.replace("hour", "hr");
+								}
+							}
 						}
 					}
+					vm.duration = durationtext;
+					applyscope();
 				}
 		    });
 		}
