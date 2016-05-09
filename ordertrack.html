@@ -38,6 +38,14 @@
 <div data-ng-show="vm.status == null" style="z-index:1000">
     <img src="img/loader.gif" class="ajax-loader"></img>
 </div>
+
+<div data-ng-show="vm.haserror == true" class="whitebg" style="height:100%; padding-top:50px; padding-bottom:50px;">
+    <center>
+        <i class="fa fa-thumbs-o-down" style="font-size:200px; color:gray"></i>
+        <h3 style="color:grey">{{vm.errortext}}</h3>
+    </center>
+</div>
+
 <div data-ng-show="vm.haserror==false" class="whitebg" ng-style="{'height':(vm.status == 4? '600px':'100%')}">
     <div>
         <div class="orderdivimg" data-ng-if="vm.status != 4">
@@ -95,7 +103,7 @@
                 </div>
             </div>
             <br/>
-            <div data-ng-if="vm.status >= 4">
+            <div data-ng-if="vm.status >= 4 && vm.drivername">
                 <h4><i class="fa fa-car"></i> <span> Delivery Person</span></h4>
                 <div style="margin-top:10px; margin-left:30px;" class="text-muted">
                     <span>{{vm.drivername}}</span></br>

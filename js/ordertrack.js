@@ -142,7 +142,7 @@ function($http, $q, $window, $rootScope, $scope, $compile, uiGmapGoogleMapApi, u
 					if(vm.isstatusclicked == false)
 						showorhideStatus();
 
-					if(vm.isdesktop == true)
+					if(vm.isdesktop == true && vm.status == 4)
 						setGoogleMaps();
 
 					if(vm.status >= 4) { //Status - Dispatched or Delivered - Track driver
@@ -250,9 +250,7 @@ function($http, $q, $window, $rootScope, $scope, $compile, uiGmapGoogleMapApi, u
 		vm.haserror = true;
 		vm.errortext = text;
 		vm.status = 0;
-
-		if(livedataref != null)
-			livedataref.off();
+		applyscope();
  	}
 
  	function getDeviceInfoId() {
@@ -268,7 +266,7 @@ function($http, $q, $window, $rootScope, $scope, $compile, uiGmapGoogleMapApi, u
 					getTripdata(new Date().getTime());
 				}
 			}
-			else {
+			else if(vm.status != 5) {
 				setErrorText("Your link is invalid.");
 			}
 			applyscope();

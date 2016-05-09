@@ -81,13 +81,15 @@
 	            </div>
 	            <span>{{vm.orderdetails.zip}}.</span><br/>
 	        </div>
-	         <br/>
-	        <h4 style="color:white"><i class="fa fa-gift"></i> <span> Items</span></h4>
-	        <div style="margin-top:10px; margin-left:30px;" class="text-muted">
-	            <span data-ng-repeat="item in vm.orderdetails.items">{{item}}</br></span>
-	        </div>
 	        <br/>
-	        <div data-ng-if="vm.status >= 4">
+	        <div data-ng-if="vm.orderdetails.items.length > 0">
+		        <h4 style="color:white"><i class="fa fa-gift"></i> <span> Items</span></h4>
+		        <div style="margin-top:10px; margin-left:30px;" class="text-muted">
+		            <span data-ng-repeat="item in vm.orderdetails.items">{{item}}</br></span>
+		        </div>
+		    </div>
+	        <br/>
+	        <div data-ng-if="vm.status >= 4 && vm.drivername">
 	            <h4 style="color:white"><i class="fa fa-car"></i> <span> Delivery Person</span></h4>
 	            <div style="margin-top:10px; margin-left:30px;" class="text-muted">
 	                <span>{{vm.drivername}}</span></br>
